@@ -2,27 +2,8 @@
 <html>
 <head>
 	<title>FormData en HTML5</title>
-	<style>
-	.barra{
-		background:#ccc;
-		height:20px;
-	}
-	.barra_azul{
-		height:20px;
-		background:#369;
-		display:block;
-		text-align:center;
-		width:0%;
-	}
-		.barra_verde{
-		height:20px;
-		background:green;
-	}
-		.barra_roja{
-		height:20px;
-		background:red;
-	}
-	</style>
+	<link rel="stylesheet" href="css/style.css">
+	<script src="js/app.js"></script>
 </head>
 <body>
 	<form id="formulario" enctype="multipart/form-data">
@@ -32,80 +13,13 @@
 		<input type="text" name="otro">
 		<input type="file" name="archivo">
 		<input type="submit" name="submit" value="Enviar Formulario"><span id="demo"></span>
-<div id="barra">
-	<div class="barra_azul">
-		<span id="span"></span>
-	</div>
-</div>
+		<div id="barra">
+			<div class="barra_azul">
+				<span id="span"></span>
+			</div>
+		</div>
 		<br>
 		<span id="data"></span>
 	</form>
-	<script>
-		//cuando haya cargado la página llamamos a init
-		window.addEventListener("load", init);
-		//
-		function init()
-		{
-			//obtenemos el formulario con querySelector
-			var formulario = document.querySelector("#formulario");
-			//le añadimos el evento submit y asociamos la función submitForm
-			formulario.addEventListener("submit", submitForm, false);
-		}
-
-		//función que envia el formulario con ajax
-		function submitForm(event)
-		{
-			//prevenimos la acción por defecto del navegador
-			event.preventDefault();
-			//creamos un objeto FormData de HTML5 y le pasamos el formulario
-			var data = new FormData(this);
-			cargad();
-			//hacemos una petición ajax pasando el formulario contra postform.php
-			var xhrObject = new XMLHttpRequest();  
-
-			//Barra
-			xhrObject.upload.addEventListener("progress", function(event){
-			let porcentaje = Math.round((event.loaded / event.total)* 100);
-			console.log(porcentaje);
-
-				var barra = document.getElementById('barra');
-				var span = document.getElementById('span');
-				barra.style.width = porcentaje + '%';
-				span.innerHTML = porcentaje+'%';
-			});
-
-			xhrObject.addEventListener('load',function(){
-
-			});
-
-			xhrObject.open("POST","upload.php");  
-			cargad();
-			xhrObject.send(data);
-			var datos = [];
-			var dato = {};
-
-			for(var pair of data.entries()) {
-			   //console.log(pair[0]+ ', '+ pair[1]); 
-			   var file = pair[1];
-			   var fileName = (!file.name) ? file : file.name;
-			   var obj = pair[0]+ ': '+ fileName;
-			   datos.push(obj);
-			
-			}
-			dato.datos = datos;
-
-			console.log(pair[1].name); 
-			console.log(JSON.stringify(dato)); 
-
-			formulario.reset();
-
-			document.getElementById("data").innerHTML= JSON.stringify(dato);
-			//console.log(e);document.getElementById("demo").style.display = 'none';
-		}
-		function cargad(){
-		document.getElementById("demo").innerHTML="Cargando..";
-		}
-	</script>
-
 </body>
 </html>
