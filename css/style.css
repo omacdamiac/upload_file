@@ -4,10 +4,12 @@
 }
 .barra_azul{
 	height:20px;
+	line-height:25px;
 	background:#369;
 	display:block;
 	text-align:center;
 	width:0%;
+	color:white;
 }
 .barra_verde{
 	height:20px;
